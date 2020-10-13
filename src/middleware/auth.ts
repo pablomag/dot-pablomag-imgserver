@@ -9,10 +9,10 @@ async function authMiddleware(
         if (!req.signedCookies.qid) {
             return res
                 .status(401)
-                .json({ message: "No authorization provided" });
+                .json({ status: "error", message: "No authorization provided" });
         }
     } catch (error) {
-        console.error("Error: " + error);
+        console.error(`Error: ${error}`);
     }
     next();
 }

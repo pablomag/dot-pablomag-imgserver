@@ -3,7 +3,7 @@ import sharp from "sharp";
 
 import { v4 as uuid } from "uuid";
 
-export class Resize {
+export class Resizer {
     folder: string;
     width: number;
     height: number;
@@ -15,7 +15,7 @@ export class Resize {
     }
 
     async save(buffer: any) {
-        const filename = Resize.filename();
+        const filename = Resizer.filename();
         const filepath = this.filepath(filename);
 
         await sharp(buffer)
@@ -23,6 +23,7 @@ export class Resize {
                 fit: sharp.fit.inside,
                 withoutEnlargement: false,
             })
+            .png({ compressionLevel: 8 })
             .toFile(filepath);
 
         return filename;
