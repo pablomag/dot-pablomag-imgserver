@@ -8,9 +8,9 @@ import helmet from "helmet";
 import auth from "./middleware/auth";
 import imageController from "./controller/imageController";
 
-import { API_URI, API_PORT, API_SECRET, SERVICE_PORT } from "./constants";
+import { API_URI, API_PORT, API_SECRET } from "./constants";
 
-const service = express();
+export const service = express();
 
 service.use(compression());
 service.use(helmet());
@@ -37,8 +37,4 @@ service.use((error: any, res: Response) => {
     return res
         .status(error.statusCode || 500)
         .json({ message: "Internal server error" });
-});
-
-service.listen(parseInt(SERVICE_PORT.toString()), () => {
-    console.info(`Server started on localhost:${SERVICE_PORT}`);
 });

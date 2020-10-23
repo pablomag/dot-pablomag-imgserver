@@ -1,0 +1,38 @@
+name: Deploy image service
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH, create .env and deploy image service
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          passphrase: ${{ secrets.SSH_PASS }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd /var/www
+            sudo mkdir dot-pablomag
+            cd dot-pablomag
+            sudo git clone https://github.com/pablomag/dot-pablomag-imgserver.git
+            mv dot-pablomag-imgserver imgserver
+            cd imgserver
+            sudo apt install node-typescript
+            sudo npm install --production
+            sudo npm install pm2 -g
+            sudo tsc
+            sudo touch .env
+            sudo bash -c "echo SERVICE_PORT=${{ secrets.SERVICE_PORT }} >> .env"
+            sudo bash -c "echo API_URL=${{ secrets.API_URL }} >> .env"
+            sudo bash -c "echo API_PORT=${{ secrets.API_PORT }} >> .env"
+            sudo bash -c "echo API_SECRET='`echo ${{ secrets.API_SECRET }} | base64 --decode`' >> .env"
+            sudo bash -c "echo PROVIDER_URI=${{ secrets.PROVIDER_URI }} >> .env"
+            sudo bash -c "echo PROVIDER_CLIENT_ID='`echo ${{ secrets.PROVIDER_CLIENT_ID }} | base64 --decode`' >> .env"
+            sudo pm2 start -r dotenv/config dist/server.js
+            sudo pm2 startup ubuntu -u ${{ secrets.SSH_USER }}
+            sudo pm2 save

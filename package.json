@@ -3,15 +3,14 @@
     "version": "1.1.0",
     "description": "Service to download, upload and serve images",
     "scripts": {
-        "prod": "node -r dotenv/config dist/index.js",
-        "dev": "nodemon -r dotenv/config dist/index.js",
+        "dev": "nodemon -r dotenv/config dist/server.js",
+        "prod": "node -r dotenv/config dist/server.js",
         "watch": "tsc -w"
     },
     "keywords": [],
     "author": "Vampaerr",
     "license": "ISC",
     "dependencies": {
-        "@types/axios": "^0.14.0",
         "axios": "^0.20.0",
         "compression": "^1.7.4",
         "cookie-parser": "^1.4.5",
@@ -27,6 +26,7 @@
         "uuid": "^8.3.0"
     },
     "devDependencies": {
+        "@types/axios": "^0.14.0",
         "@types/compression": "^1.7.0",
         "@types/cookie-parser": "^1.4.2",
         "@types/cors": "^2.8.7",
