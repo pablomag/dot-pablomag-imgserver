@@ -20,7 +20,7 @@ jobs:
             sudo mkdir dot-pablomag
             cd dot-pablomag
             sudo git clone https://github.com/pablomag/dot-pablomag-imgserver.git
-            mv dot-pablomag-imgserver imgserver
+            sudo mv dot-pablomag-imgserver imgserver
             cd imgserver
             sudo apt install node-typescript
             sudo npm install --production
