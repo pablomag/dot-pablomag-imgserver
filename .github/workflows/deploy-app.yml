@@ -33,6 +33,6 @@ jobs:
             sudo bash -c "echo API_SECRET='`echo ${{ secrets.API_SECRET }} | base64 --decode`' >> .env"
             sudo bash -c "echo PROVIDER_URI=${{ secrets.PROVIDER_URI }} >> .env"
             sudo bash -c "echo PROVIDER_CLIENT_ID='`echo ${{ secrets.PROVIDER_CLIENT_ID }} | base64 --decode`' >> .env"
-            sudo pm2 start -r dotenv/config dist/server.js
+            sudo pm2 start pm2.config.js
             sudo pm2 startup ubuntu -u ${{ secrets.SSH_USER }}
             sudo pm2 save
