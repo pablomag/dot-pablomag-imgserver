@@ -19,7 +19,7 @@ jobs:
           script: |
             cd /var/www/github-actions
             sudo git pull
-            sudo npm install
+            sudo npm install --production --unsafe-perm
             sudo tsc
             sudo rm .env
             sudo touch .env

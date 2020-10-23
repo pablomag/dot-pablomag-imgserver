@@ -23,7 +23,7 @@ jobs:
             sudo mv dot-pablomag-imgserver imgserver
             cd imgserver
             sudo apt install node-typescript
-            sudo npm install --production
+            sudo npm install --production --unsafe-perm
             sudo npm install pm2 -g
             sudo tsc
             sudo touch .env
