@@ -22,9 +22,12 @@ jobs:
             sudo git clone https://github.com/pablomag/dot-pablomag-imgserver.git
             sudo mv dot-pablomag-imgserver imgserver
             cd imgserver
-            sudo apt install node-typescript
-            sudo npm install --production --unsafe-perm
             sudo npm install pm2 -g
+            curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+            echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+            sudo apt-get update && sudo apt-get install yarn -y
+            sudo yarn install
+            sudo apt install node-typescript
             sudo tsc
             sudo touch .env
             sudo bash -c "echo SERVICE_PORT=${{ secrets.SERVICE_PORT }} >> .env"
@@ -33,6 +36,6 @@ jobs:
             sudo bash -c "echo API_SECRET='`echo ${{ secrets.API_SECRET }} | base64 --decode`' >> .env"
             sudo bash -c "echo PROVIDER_URI=${{ secrets.PROVIDER_URI }} >> .env"
             sudo bash -c "echo PROVIDER_CLIENT_ID='`echo ${{ secrets.PROVIDER_CLIENT_ID }} | base64 --decode`' >> .env"
-            sudo pm2 start pm2.config.js
-            sudo pm2 startup ubuntu -u ${{ secrets.SSH_USER }}
-            sudo pm2 save
+            pm2 start pm2.config.js
+            pm2 startup systemd -u ${{ secrets.SSH_USER }}
+            pm2 save

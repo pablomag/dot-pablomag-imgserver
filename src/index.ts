@@ -8,7 +8,7 @@ import helmet from "helmet";
 import auth from "./middleware/auth";
 import imageController from "./controller/imageController";
 
-import { API_URI, API_PORT, API_SECRET } from "./constants";
+import { API_URL, API_SECRET } from "./constants";
 
 export const service = express();
 
@@ -17,7 +17,7 @@ service.use(helmet());
 
 service.use(
     cors({
-        origin: `${API_URI}:${API_PORT}`,
+        origin: `${API_URL}`,
         credentials: true,
     })
 );

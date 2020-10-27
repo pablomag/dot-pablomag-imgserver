@@ -17,9 +17,9 @@ jobs:
           passphrase: ${{ secrets.SSH_PASS }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            cd /var/www/github-actions
+            cd /var/www/dot-pablomag/imgserver
             sudo git pull
-            sudo npm install --production --unsafe-perm
+            sudo yarn install
             sudo tsc
             sudo rm .env
             sudo touch .env
@@ -29,4 +29,4 @@ jobs:
             sudo bash -c "echo API_SECRET='`echo ${{ secrets.API_SECRET }} | base64 --decode`' >> .env"
             sudo bash -c "echo PROVIDER_URI=${{ secrets.PROVIDER_URI }} >> .env"
             sudo bash -c "echo PROVIDER_CLIENT_ID='`echo ${{ secrets.PROVIDER_CLIENT_ID }} | base64 --decode`' >> .env"
-            sudo pm2 restart -r dotenv/config dist/server.js
+            pm2 restart pm2.config.js
