@@ -38,4 +38,4 @@ jobs:
             sudo bash -c "echo PROVIDER_CLIENT_ID='`echo ${{ secrets.PROVIDER_CLIENT_ID }} | base64 --decode`' >> .env"
             pm2 start pm2.config.js
             pm2 startup systemd -u ${{ secrets.SSH_USER }}
-            pm2 save
+            pm2 save --force
