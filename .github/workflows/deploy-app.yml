@@ -27,8 +27,7 @@ jobs:
             echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
             sudo apt-get update && sudo apt-get install yarn -y
             sudo yarn install
-            sudo apt install node-typescript
-            sudo tsc
+            sudo yarn build
             sudo touch .env
             sudo bash -c "echo SERVICE_PORT=${{ secrets.SERVICE_PORT }} >> .env"
             sudo bash -c "echo API_URL=${{ secrets.API_URL }} >> .env"

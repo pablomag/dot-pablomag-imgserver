@@ -5,6 +5,7 @@
     "scripts": {
         "dev": "nodemon -r dotenv/config dist/server.js",
         "prod": "node -r dotenv/config dist/server.js",
+        "build": "tsc",
         "watch": "tsc -w"
     },
     "keywords": [],
