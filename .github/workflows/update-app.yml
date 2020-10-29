@@ -24,7 +24,7 @@ jobs:
             sudo rm .env
             sudo touch .env
             sudo bash -c "echo SERVICE_PORT=${{ secrets.SERVICE_PORT }} >> .env"
-            sudo bash -c "echo API_URL=0${{ secrets.API_URL }} >> .env"
+            sudo bash -c "echo API_URL=${{ secrets.API_URL }} >> .env"
             sudo bash -c "echo API_SECRET='`echo ${{ secrets.API_SECRET }} | base64 --decode`' >> .env"
             sudo bash -c "echo PROVIDER_URI=${{ secrets.PROVIDER_URI }} >> .env"
             sudo bash -c "echo PROVIDER_CLIENT_ID='`echo ${{ secrets.PROVIDER_CLIENT_ID }} | base64 --decode`' >> .env"
