@@ -8,6 +8,8 @@ import { Provider } from "../util/Provider";
 import bodyParser from "../middleware/bodyParser";
 import upload from "./../middleware/uploader";
 
+import { IMAGE_WIDTH, IMAGE_HEIGHT, IMAGE_QUALITY } from "../constants";
+
 const router = Router();
 
 router.post(
@@ -22,8 +24,9 @@ router.post(
             const imagePath = path.join(__dirname, "../../data/images");
             const properties = {
                 folder: imagePath,
-                width: 1920,
-                height: 1280,
+                width: IMAGE_WIDTH,
+                height: IMAGE_HEIGHT,
+                quality: IMAGE_QUALITY,
             };
             const fileUpload = new Resizer(properties);
             const filename = await fileUpload.save(req.file.buffer);
@@ -57,7 +60,7 @@ router.get("/search/:keyword", async (req: Request, res: Response) => {
         if (!images) {
             return res.status(200).json({ status: "error", message: "No images found" });
         }
-    
+
         return res.status(200).json({ status: "success", message: `${images.total} images found`, images: images.results });
     } catch (error) {
         return res.status(500).json({ status: "error", message: error.message });
@@ -80,8 +83,9 @@ router.post("/download", [bodyParser], async (req: Request, res: Response) => {
         const imagePath = path.join(__dirname, "../../data/images");
         const properties = {
             folder: imagePath,
-            width: 1920,
-            height: 1280,
+            width: IMAGE_WIDTH,
+            height: IMAGE_HEIGHT,
+            quality: IMAGE_QUALITY,
         };
         const fileUpload = new Resizer(properties);
         const filename = await fileUpload.save(result.imageTempPath);

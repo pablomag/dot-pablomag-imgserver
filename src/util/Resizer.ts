@@ -7,11 +7,20 @@ export class Resizer {
     folder: string;
     width: number;
     height: number;
+    quality: number;
 
-    constructor(properties: { folder: string; width: number; height: number }) {
+    constructor(
+        properties: {
+            folder: string,
+            width: number,
+            height: number,
+            quality: number,
+        }
+    ){
         this.folder = properties.folder;
         this.width = properties.width;
         this.height = properties.height;
+        this.quality = properties.quality;
     }
 
     async save(buffer: any) {
@@ -19,11 +28,20 @@ export class Resizer {
         const filepath = this.filepath(filename);
 
         await sharp(buffer)
-            .resize(this.width, this.height, {
-                fit: sharp.fit.inside,
-                withoutEnlargement: false,
+            .resize(
+                this.width,
+                this.height,
+                {
+                    fit: sharp.fit.contain,
+                    withoutEnlargement: false,
+                }
+            )
+            .png({
+                progressive: true,
+                compressionLevel: 9,
+                adaptiveFiltering: true,
+                quality: 80,
             })
-            .png({ compressionLevel: 8 })
             .toFile(filepath);
 
         return filename;

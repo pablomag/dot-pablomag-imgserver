@@ -24,14 +24,14 @@ service.use(
 
 service.use(cookieParser(API_SECRET));
 
+service.use("/images/", express.static(path.join(__dirname, "../data/images")));
+
 service.use(auth, (req: Request, _: Response, next: NextFunction) => {
     console.log(`${req.method}: ${req.url}`);
     return next();
 });
 
 service.use("/image", imageController);
-
-service.use("/images/", express.static(path.join(__dirname, "../data/images")));
 
 service.use((error: any, res: Response) => {
     return res
