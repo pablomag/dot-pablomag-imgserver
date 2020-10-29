@@ -8,4 +8,4 @@ export const PROVIDER_CLIENT_ID = process.env.PROVIDER_CLIENT_ID || "lollipop_ti
 
 export const IMAGE_WIDTH = 1920;
 export const IMAGE_HEIGHT = 600;
-export const IMAGE_QUALITY = 80;
+export const IMAGE_QUALITY = 60;

@@ -32,7 +32,7 @@ export class Resizer {
                 this.width,
                 this.height,
                 {
-                    fit: sharp.fit.contain,
+                    fit: sharp.fit.cover,
                     withoutEnlargement: false,
                 }
             )
@@ -40,7 +40,7 @@ export class Resizer {
                 progressive: true,
                 compressionLevel: 9,
                 adaptiveFiltering: true,
-                quality: 80,
+                quality: this.quality,
             })
             .toFile(filepath);
 
