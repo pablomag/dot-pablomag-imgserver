@@ -15,7 +15,10 @@ export class Provider {
 
     async download(image: any): Promise<any> {
         const url = `${image.full}&client_id=${PROVIDER_CLIENT_ID}`;
-        const imageTempPath = path.resolve(__dirname, `../../data/images/__temp_${image.id}-${image.user.id}.png`);
+        const imageTempPath = path.resolve(
+            __dirname,
+            `../../data/images/__temp_${image.id}-${image.user.id}.png`
+        );
         const writer = fs.createWriteStream(imageTempPath);
 
         const response = await axios.get(url, { responseType: "stream" });
@@ -23,10 +26,21 @@ export class Provider {
 
         const saveTempFile = async () => {
             return new Promise((resolve, reject) => {
-                writer.on("finish", () => resolve({ status: "success", message: "Temporary image created successfully", imageTempPath }));
-                writer.on("error", () => reject({ status: "error", message: "Error while creating temporary file" }));
+                writer.on("finish", () =>
+                    resolve({
+                        status: "success",
+                        message: "Temporary image created successfully",
+                        imageTempPath,
+                    })
+                );
+                writer.on("error", () =>
+                    reject({
+                        status: "error",
+                        message: "Error while creating temporary file",
+                    })
+                );
             });
-        }
+        };
         return await saveTempFile();
     }
 

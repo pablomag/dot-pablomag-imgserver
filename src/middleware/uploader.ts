@@ -2,7 +2,7 @@ import multer from "multer";
 
 const upload = multer({
     limits: {
-        fileSize: 4 * 1024 * 1024,
+        fileSize: 64 * 1024 * 1024,
     },
 });
 
